@@ -30,9 +30,12 @@ body {
     border: 1px solid white;
 }
 
-.status {
-    font-size: 70px; 
+#status {
+    display: grid;
+    font-size: 60px; 
     margin: 20px;
+    align-items: center;
+    justify-content: center;
 }
 
 .restart {
