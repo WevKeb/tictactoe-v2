@@ -1,0 +1,41 @@
+h1 {
+    text-align: center;
+    font-size: 90px;
+}
+
+body {
+    /* display grid easier column and rows */
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    background-color: aquamarine;
+    width: 450px;
+    height: 450px;
+    border-radius: 30px;
+    border: 1px solid white;
+    border-collapse: collapse;
+}
+
+.cell {
+    height: 147px;
+    width: 147px;
+    text-align: center;
+    font-size: 500%;
+    border: 1px solid white;
+}
+
+.status {
+    font-size: 70px; 
+    margin: 20px;
+}
+
+.restart {
+    border: 5px;
+    font-size: 40px;
+};
