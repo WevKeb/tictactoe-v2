@@ -1,9 +1,8 @@
-let gameActive = true; 
 let currentPlayer = 'X';
 let state = {
     board: ["", "", "", "", "", "", "", "", "",],
-    players: ["", ""],
-    counter: 0,
+    // players: ["", ""],
+    // counter: 0,
 };
 
 const winningStates = [
@@ -17,8 +16,6 @@ const winningStates = [
     [2,4,6],
 ];
 
-
-
 const winningMessage = () => {
     return currentPlayer + " wins!";
 }
@@ -30,7 +27,6 @@ const drawMessage = () => {
 const currentPlayerTurn = () => {
     return "It is " + currentPlayer +"'s turn";
 };
-
 
 
 // ********** DOM SELECTORS ****************
@@ -47,11 +43,17 @@ const playerTurn = document.querySelector('.player-turn');
 cells.forEach((cell) => {
     cell.addEventListener('click', cellClicked)
 });
-
 // cells.addEventListener('click', console.log('click is working'));
 
-
-// restartButton.addEventListener('click', restartGame);
+// add a click event listener on the restart button, when clicked execute a function that resets the game to the starting state (currentplayer, board state, player display, and display in individual cells)
+restartButton.addEventListener('click', () => {
+    currentPlayer = "X";
+    state.board = ["", "", "", "", "", "", "", "", "",];
+    currentPlayerDisplay.innerHTML = currentPlayerTurn();
+    cells.forEach((cell) => {
+        cell.innerHTML = "";
+    });
+});
 
 // ********** FUNCTIONS **************** 
 
@@ -77,7 +79,7 @@ function cellClicked(event) {
     //     return
     // }
 
-    if (state.board[clickedCellIndex] !== "" || gameActive === false) {
+    if (state.board[clickedCellIndex] !== "") {
         return;
     } 
     markBoard(clickedCellEvent, clickedCellIndex);
@@ -129,14 +131,14 @@ function checkForWin () {
     }
     if (roundWon === true) {
         currentPlayerDisplay.innerHTML = winningMessage();
-        gameActive = false;
+        
         return;
     }
       // if there is no winner, we need to check for draw as well. we know there will be a draw if there has been no winner declared (determined by the loop/roundwon above ^^) AND there are no empty spaces left in the state of the board meaning every space has been taken, no winner has been determined, meaning its a draw. return out of the function as the game is over
     let roundDraw = state.board.includes("");
     if (roundDraw === false) {
         currentPlayerDisplay.innerHTML = drawMessage();
-        gameActive = false;
+        
         return;
     }
 // if there is no winner or no draw by the clickevent, then changeplayer and the game continues
@@ -146,10 +148,12 @@ function checkForWin () {
 
 
 // function restartGame () {
-//     let gameActive = true;
 //     let currentPlayer = 'X';
 //     let state = {
 //     board: ["", "", "", "", "", "", "", "", "",]
 //     };
-    
-// }
+//     currentPlayerDisplay.innerHTML = currentPlayerTurn();
+//     cells.forEach((cell) => {
+//         cell.innerHTML = "";
+//     });
+// };
