@@ -36,7 +36,7 @@ const currentPlayerTurn = () => {
 // ********** DOM SELECTORS ****************
 // select all cells on the board and store as array
 const cells = document.querySelectorAll('.cell');
-const statusDisplay = document.getElementById('status');
+const currentPlayerDisplay = document.getElementById('status');
 const restartButton = document.querySelector('.restart');
 const playerTurn = document.querySelector('.player-turn');
 
@@ -55,6 +55,8 @@ cells.forEach((cell) => {
 
 // ********** FUNCTIONS **************** 
 
+currentPlayerDisplay.innerHTML = currentPlayerTurn();
+
 function markBoard(event) {
     // console.log('click is working')
     // console.log(event.target);
@@ -68,10 +70,11 @@ function markBoard(event) {
         // 
         state.board[clickedCellIndex] = currentPlayer    
         event.target.innerHTML = currentPlayer;
-        changePlayer();    
     } else {
         return
-    }};
+    }
+    checkForWin();
+};
 
     // this changes the player from X to O, simply by evaluating if the state of current player is X change to O, otherwise we assume the current is O so we will change it to X 
 function changePlayer () {
@@ -80,17 +83,45 @@ function changePlayer () {
     } else {
         currentPlayer = "X";
     }
-    statusDisplay.innerHTML = currentPlayerTurn();
+    currentPlayerDisplay.innerHTML = currentPlayerTurn();
 };
 
+function checkForWin () {
+    let roundWon = false;
 
+    for (i=0; i<=8; i++) {
+        // loop through winngStates array and pull out each win condition array. we need the values in each win condition array, which are the indexes of the board we need to check. if thoses indexes on the board are the same value (aka X or O) then that player wins
+        // so we look at each individual win condition array at index 0, 1, 2 and pass that value as the index to check in the current state of the board
+        // we assign that value in the board to a variable
+        // then we check those variable to see if they are equal, if they are then that player wins 
+        const winCondition = winningStates[i];
+        // console.log(winCondition[0]);
+        let a = state.board[winCondition[0]];
+        console.log('this is a ',a);
+        console.log(typeof(a));
+        let b = state.board[winCondition[1]];
+        console.log('this is b ',b);
+        let c = state.board[winCondition[2]];
+        console.log('this is c ',c);
+        
+        // if (a === "" || b === "" || c === ""){
+        //     continue;
+        // }
 
-    // const clickedCell = cellEvent.target;
-    // const clickedCellIndex = clickedCell.getAtrribute('data-cell-index');
-    // console.log(clickedCellIndex);
-// };
+        if (a === b && b === c) {
+            roundWon = true;
+            break
+        }
+    }
 
+    if (roundWon) {
+        currentPlayerDisplay.innerHTML = winningMessage();
+    }
+    changePlayer();
+};
+
+// checkForWin();
 
 // const restartGame = () => {
 
-// }
+// 
